@@ -17,41 +17,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/contatos")
 public class ContatoRest {
 
-    private final Map<Integer, Contato> cursos = new HashMap<>();
+    private final Map<Integer, Contato> contatos = new HashMap<>();
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Contato>> findAll() {
-        return new ResponseEntity<>(new ArrayList<>(cursos.values()), HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(contatos.values()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Contato> findById(@PathVariable("id") Integer id) {
-        Contato curso = cursos.get(id);
-        if (curso == null) {
+        Contato contato = contatos.get(id);
+        if (contato == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(curso, HttpStatus.OK);
+        return new ResponseEntity<>(contato, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Contato> create(@RequestBody Contato curso) {
-        curso.setId(curso.getGerador());
-        cursos.put(curso.getId(), curso);
-        return new ResponseEntity<>(curso, HttpStatus.OK);
+    public ResponseEntity<Contato> create(@RequestBody Contato contato) {
+        contato.setId(contato.getGerador());
+        contatos.put(contato.getId(), contato);
+        return new ResponseEntity<>(contato, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Contato> update(@RequestBody Contato curso) {
-        cursos.put(curso.getId(), curso);
-        return new ResponseEntity<>(curso, HttpStatus.OK);
+    public ResponseEntity<Contato> update(@RequestBody Contato contato) {
+        contatos.put(contato.getId(), contato);
+        return new ResponseEntity<>(contato, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-        Contato curso = cursos.remove(id);
+        Contato contato = contatos.remove(id);
 
-        if (curso == null) {
+        if (contato == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
