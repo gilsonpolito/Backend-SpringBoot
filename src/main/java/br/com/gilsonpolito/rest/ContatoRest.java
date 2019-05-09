@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/contatos")
 public class ContatoRest {
 
-    private final Map<Integer, Contato> contatos = new HashMap<>();
+    private final AtomicLong counter = new AtomicLong(1);
+    private final Map<Long, Contato> contatos = new HashMap<>();
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Contato>> findAll() {
@@ -25,7 +28,7 @@ public class ContatoRest {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Contato> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Contato> findById(@PathVariable("id") Long id) {
         Contato contato = contatos.get(id);
         if (contato == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,7 +39,7 @@ public class ContatoRest {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Contato> create(@RequestBody Contato contato) {
-        contato.setId(contato.getGerador());
+        contato.setId(counter.getAndIncrement());
         contatos.put(contato.getId(), contato);
         return new ResponseEntity<>(contato, HttpStatus.OK);
     }

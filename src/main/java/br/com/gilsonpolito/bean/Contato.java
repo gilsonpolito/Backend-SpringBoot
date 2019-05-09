@@ -4,24 +4,18 @@ import java.util.Objects;
 
 public class Contato {
 
-    private Integer id;
+    private Long id;
     private String nome;
     private String email;
-
-    private static int gerador = 0;
-
-    public int getGerador() {
-        return ++Contato.gerador;
-    }
 
     public Contato() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
