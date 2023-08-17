@@ -21,4 +21,5 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk-jre
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 COPY --from=base /Backend-SpringBoot/target/Backend-SpringBoot-1.0-SNAPSHOT.jar /app
 WORKDIR app
+EXPOSE 8080/tcp
 ENTRYPOINT ["java","-jar","Backend-SpringBoot-1.0-SNAPSHOT.jar"]
